@@ -1,0 +1,70 @@
+# Created by Ultra Librarian Gold 6.4.193 Copyright © 1999-2013
+# Jeff Perry - Server, Texas Instruments
+
+Grid mil;
+Set Wire_Bend 2;
+
+
+Edit '0402.pac';
+Layer 1;
+Smd '1' 22 24 -0 R0 (-16.5 0);
+Layer 1;
+Smd '2' 22 24 -0 R0 (16.5 0);
+Layer 21;
+Layer 25;
+Wire 6 (-6 -12) (-6 12);
+Wire 6 (-6 12) (-22 12);
+Wire 6 (-22 12) (-22 -12);
+Wire 6 (-22 -12) (-6 -12);
+Wire 6 (5 12) (6 -12);
+Wire 6 (6 -12) (22 -12);
+Wire 6 (22 -12) (22 12);
+Wire 6 (22 12) (5 12);
+Wire 6 (-22 -12) (22 -12);
+Wire 6 (22 -12) (22 12);
+Wire 6 (22 12) (-22 12);
+Wire 6 (-22 12) (-22 -12);
+Change Size 50;
+Change Ratio 6;
+Text '>NAME' SR0 (-113 -25);
+Layer 27;
+Change Size 50;
+Change Ratio 6;
+Text '>VALUE' SR0 (-136 -25);
+
+Edit 'WB_CAPACITOR.sym';
+Layer 94;
+Pin '1' Pas None Short R180 Off 0 (300 0);
+Pin '2' Pas None Short R0 Off 0 (-300 0);
+Wire 6 (300 0) (200 0);
+Wire 6 (-300 0) (-200 0);
+Wire 6 (30 -120) (30 120);
+Wire 6 (-200 0) (-30 0);
+Wire 6 (30 0) (200 0);
+Wire 6 (-30 -120) (-30 120);
+Layer 97;
+Layer 95;
+Change Size 82;
+Change Ratio 6;
+Text '>NAME' SR0 (-186 259);
+Layer 96;
+Change Size 82;
+Change Ratio 6;
+Text '>VALUE' SR0 (-223 -41);
+
+Edit 'GRM1555C1H470FA01D.dev';
+Prefix '';
+Description '';
+Value Off;
+Add WB_CAPACITOR 'A' Next  0 (0 0);
+Package '0402';
+Technology '';
+Attribute DatasheetURL 'http://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM1555C1H470FA01%2D01.pdf';
+Attribute Cap '4.7E-11';
+Attribute ESR '0.0';
+Attribute IRMS '0.0';
+Attribute VDC '50.0';
+Attribute Manufacturer_Part_Number 'GRM1555C1H470FA01D';
+Attribute Vendor 'MuRata';
+Connect 'A.1' '1';
+Connect 'A.2' '2';
