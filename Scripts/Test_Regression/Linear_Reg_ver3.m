@@ -9,14 +9,14 @@ close all;
 
 % % Import the data into a dataset array.
 load('NET_Vrms_Dataset.mat');
-load('Actual_Power_Waveform.mat');
+load('Actual_Power_Waveform_rev2.mat');
 
 % % Concatenate Vrms data horizontally from all the calibrator traces measured from sensing coils 
 net_Vrms_HRZ = [];
 Act_PW_HRZ = [];
 for j=1:15
-    net_Vrms_HRZ = [net_Vrms_HRZ; net_Vrms(1:10,j)];
-    Act_PW_HRZ = [Act_PW_HRZ; ones(10,1)*Act_PW(1,j)'];
+    net_Vrms_HRZ = [net_Vrms_HRZ; Vrms(1:12,j)];
+    Act_PW_HRZ = [Act_PW_HRZ; ones(12,1)*Act_PW(1,j)'];
 end
 
 %% Load dataset in to tables for learning model
@@ -25,22 +25,28 @@ ds = dataset(Act_PW_HRZ,net_Vrms_HRZ,'VarNames',{'W','HRZ_CAT_Vrms'});
 % Terms Matrix
 T = [0 0;0 1;];
 
-%%  Learning Phase
+% %  Learning Phase
 
 % Learn the linear model
 % MPG = 'BloodPressure ~ 1 + Sex + Age + Smoker';
 mdl1 = LinearModel.fit(ds,T);
 
 %% Plot residuals
-plotResiduals(mdl1)
+% plotResiduals(mdl1);
 % plotResiduals(mdl1,'probability')
 % Find outliers
-% outl = find(mdl1.Residuals.Raw <= -6);
-% mdl2 = LinearModel.fit(ds_train,T,'Exclude',outl);
+out1 = find(mdl1.Residuals.Raw <= -15);
+out2 = find(mdl1.Residuals.Raw >= 15);
+out1 = [out1; out2];
+mdl2 = LinearModel.fit(ds,T,'Exclude',out1);
+plotResiduals(mdl2)
+saveas(gcf,strcat('Plot_PDF_residuals_ver2','.png'));
 
 %% Predict using this linear model
-ds_test = net_Vrms(12,:)';
-[ypred1 yci1] = predict(mdl1,ds_test);
+test_trace_index = 22;
+ds_test = Vrms(test_trace_index,:);
+
+[ypred1 yci1] = predict(mdl1,ds_test');
 % [ypred2 yci2] = predict(mdl2,ds_test1);
 
 %% Plot the data for visualization
@@ -63,6 +69,27 @@ for i=1:15
     xlabel('Time(each tick is computed over 10seconds)');
     % plot(ds_test(:,1),'g');
 end
+saveas(gcf,strcat('Linear_reg_results_exp',num2str(test_trace_index),'_mean','.png'));
+
+%% Error margin
+for i=1:15
+    error(i) = Act_PW(i)-ypred1(i);
+end
+    
+plot(error,'b-*');
+ylabel('Error amplitude (in Watts)')
+xlabel('Increasing order of appliances (in terms of Watts)')
+grid on;
+xlim([1 15]);
+set(gca,'XTick',[1:1:15])
+saveas(gcf,strcat('Error in predictions_exp',num2str(test_trace_index),'_mean','.png'));
+
+% Compute RMSE across all 15 loads
+rmse = sqrt(mean((error).^2));
+
+
+
+
 
 
 

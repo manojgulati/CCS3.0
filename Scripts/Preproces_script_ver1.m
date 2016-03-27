@@ -7,13 +7,13 @@ clear all;
 close all;
 
 Path1 = '';
-Path2 = 'cal-seq-180sec-march24-EXP-5';
+Path2 = 'cal-seq-180sec-march24-EXP-10';
 
 load(strcat(Path1,Path2,'.mat'));
 
 %% Select and chop off guard intervals
 
-start_slot = 5200000;
+start_slot = 5600000;
 % 5280000
 end_slot = start_slot+150*250000;
 
@@ -49,9 +49,8 @@ for j=1:15
 end
 
 % % save slotted waveforms
-
 save(strcat(Path2,'-extracted','.mat'),'time_ext','data_ext');
-
+clear all;
 
 
 
