@@ -8,8 +8,8 @@ clc;
 clear all;
 close all;
 
-var = 1;
-var_length = 4;
+var = 9;
+var_length = 6;
 % while(var<2)
     
 Path1 = '';
@@ -57,8 +57,8 @@ end
 % % Plot time domain data from Inductive coils
 
 for j=1:var_length
-    h(j) = subplot(2,2,j);
-    plot(time,data(:,j),'r')
+    h(j) = subplot(var_length/2,2,j);
+%     plot(time,data(:,j),'r')
     hold on;
     plot(time,y(:,j),'b')
     xlabel('Time (in seconds)')
@@ -70,7 +70,7 @@ for j=1:var_length
     set(gca,'XTick',[0:10:200])
     linkaxes(h(j),'x')
 end
-saveas(h,strcat(Path2,'_BW_LPF3','.png'));
+saveas(gcf,strcat(Path2,'_BW_LPF3','.png'));
 % save(strcat(Path1,Path2,'_Filtered','.mat'),'time','y');
 % close all;
 % var=var+1;
