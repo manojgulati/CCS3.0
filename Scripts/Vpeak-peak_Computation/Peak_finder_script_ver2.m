@@ -4,8 +4,9 @@ clc;
 clear all;
 close all;
 
-Path3 = 'Exp-10';
-Path1 = strcat('cal-seq-180sec-march24-',Path3,'-extracted');
+Path3 = 'Exp-2';
+input_channel = 4;
+Path1 = strcat(Path3,'_Filtered_extracted_',num2str(input_channel));
 Path2 = './Processed_data/';
 % load slotted waveform data for computation
 load(strcat(Path1,'.mat'));
@@ -36,4 +37,4 @@ for j=1:14
 end
 Vrms = [AUT1_rms AUT_rms];
 
-save(strcat(Path2,Path3,'.mat'),'Vrms');
+save(strcat(Path3,'_RMS_',num2str(input_channel),'.mat'),'Vrms');

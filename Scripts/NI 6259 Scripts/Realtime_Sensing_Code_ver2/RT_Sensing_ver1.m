@@ -8,7 +8,7 @@ clc;
 
 % Logtime = 200;
 Fs = 10000; % 500 kHz
-num_sensors = 1;
+num_sensors = 6;
 s = daq.createSession('ni');
 s.addAnalogInputChannel('Dev1',[0:num_sensors],'Voltage');
 for j=1:num_sensors
@@ -42,6 +42,9 @@ s.startBackground(); % Start data acq. process in background
 % fclose(fid);
 s.stop();
 delete(lh);
+close all;
+disp('Data collection stopped');
+
 %%
 clear all;
 clc;

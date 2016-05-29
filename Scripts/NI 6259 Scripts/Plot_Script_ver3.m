@@ -8,7 +8,7 @@ clc;
 clear all;
 close all;
 
-var = 9;
+var = 2;
 var_length = 6;
 % while(var<2)
     
@@ -70,8 +70,8 @@ for j=1:var_length
     set(gca,'XTick',[0:10:200])
     linkaxes(h(j),'x')
 end
-saveas(gcf,strcat(Path2,'_BW_LPF3','.png'));
-% save(strcat(Path1,Path2,'_Filtered','.mat'),'time','y');
+% saveas(gcf,strcat(Path2,'_BW_LPF3','.png'));
+save(strcat(Path1,Path2,'_Filtered','.mat'),'time','y');
 % close all;
 % var=var+1;
 % end

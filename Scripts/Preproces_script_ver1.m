@@ -7,17 +7,21 @@ clear all;
 close all;
 
 Path1 = '';
-Path2 = 'cal-seq-180sec-march24-EXP-10';
+Path2 = 'EXP-2_Filtered';
+
+Fs = 10000; % Sampling frequency
+Time_dur = 10; % Measurement time for each load configuration
 
 load(strcat(Path1,Path2,'.mat'));
 
 %% Select and chop off guard intervals
 
-start_slot = 5600000;
-% 5280000
-end_slot = start_slot+150*250000;
+start_slot = 215000;
+end_slot = start_slot+150*Fs;
 
-plot(time(start_slot:end_slot),y(start_slot:end_slot,1),'b')
+input_channel = 4;
+
+plot(time(start_slot:end_slot),y(start_slot:end_slot,input_channel),'b')
 % xlabel('Time (in seconds)')
 % ylabel('Amplitude (in volts)')
 % legend('Filtering data')
@@ -38,18 +42,18 @@ grid on;
 %% Extract slotted waveforms
 clc;
 time_ext =[];
-offset = 2500000; 
+offset = Fs*Time_dur; 
 for j=1:15
     % Prepare a fine grained load activation time slots
 %     time_slot = start_slot+j*10*250000;
     % Time extracted for each load activation
     time_ext(:,j) = time((start_slot+(j-1)*offset):(start_slot+(j*offset)));
     % Data extracted for each load activation
-    data_ext(:,j) = y((start_slot+(j-1)*offset):(start_slot+(j*offset))); 
+    data_ext(:,j) = y((start_slot+(j-1)*offset):(start_slot+(j*offset)),input_channel); 
 end
 
 % % save slotted waveforms
-save(strcat(Path2,'-extracted','.mat'),'time_ext','data_ext');
+save(strcat(Path2,'_extracted_',num2str(input_channel),'.mat'),'time_ext','data_ext');
 clear all;
 
 
