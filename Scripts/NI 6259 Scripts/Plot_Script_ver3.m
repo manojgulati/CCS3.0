@@ -8,8 +8,10 @@ clc;
 clear all;
 close all;
 
-var = 2;
+var = 8;
 var_length = 6;
+seq = [1,4,7,10,13,16];
+
 % while(var<2)
     
 Path1 = '';
@@ -50,7 +52,7 @@ Hd = design(d,'butter');
 
 for i=1:var_length
     disp(i);
-    x(:,i) = data(:,i);
+    x(:,i) = data(:,seq(i));
     y(:,i) = filter(Hd, x(:,i));
 end
 

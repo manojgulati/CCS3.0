@@ -4,37 +4,32 @@ clc;
 clear all;
 close all;
 
-Path3 = 'Exp-2';
-input_channel = 4;
-Path1 = strcat(Path3,'_Filtered_extracted_',num2str(input_channel));
+Path1 = 'Exp-';
+input_channel = 1;
+num_channels = 5;
 Path2 = './Processed_data/';
-% load slotted waveform data for computation
-load(strcat(Path1,'.mat'));
+Path3 = './Filtered_data/';
+exp_num = 8;
 
-%% Chop the unneccessary transient signal in AUT-1
+while (input_channel<=num_channels)
 
-limit=1;
-
-plot(data_ext(limit:end,1));
-
-%% data for appliance-1 (which is chopped to remove transients)
-AUT1_data(:,1) = data_ext(limit:end,1);
-AUT1_time(:,1) = time_ext(limit:end,1);
-% % data for remaining appliances (1-14)
-for j=1:14
-    AUT_data(:,j)=data_ext(:,j+1);
-    AUT_time(:,j)=time_ext(:,j+1);    
+    load(strcat(Path3,Path1,num2str(exp_num),'_Filtered_extracted_',num2str(input_channel),'.mat')); 
+    for j=1:15
+        AUT_demean(:,j) = data_ext(:,j) - mean(data_ext(:,j));
+        AUT_rms(j) = rms(AUT_demean(:,j));
+%         disp('PQR:');
+%         disp(j);
+    end
+    Vrms(input_channel,:) = AUT_rms;
+% %     disp('CHK:');
+%     disp(input_channel);
+    clear AUT_rms;
+    input_channel = input_channel+1;    
 end
 
-% % Compute peaks from slotted waveforms
+save(strcat(Path2,Path1,num2str(exp_num),'_RMS','.mat'),'Vrms');
 
-AUT1_demean = AUT1_data - mean(AUT1_data);
-AUT1_rms = rms(AUT1_demean);
 
-for j=1:14
-    AUT_demean(:,j) = AUT_data(:,j) - mean(AUT_data(:,j));
-    AUT_rms(j) = rms(AUT_demean(:,j));
-end
-Vrms = [AUT1_rms AUT_rms];
 
-save(strcat(Path3,'_RMS_',num2str(input_channel),'.mat'),'Vrms');
+
+
