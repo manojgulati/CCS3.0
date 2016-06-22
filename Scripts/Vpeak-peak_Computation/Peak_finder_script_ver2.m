@@ -9,7 +9,7 @@ input_channel = 1;
 num_channels = 5;
 Path2 = './Processed_data/';
 Path3 = './Filtered_data/';
-exp_num = 8;
+exp_num = 7;
 
 while (input_channel<=num_channels)
 

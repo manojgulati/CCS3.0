@@ -8,15 +8,22 @@ clc;
 % % load ground tr current data and measured voltage data frm sensing coils
 format long e;
 Path1 = 'Exp-'; % file having measured voltage and current data for learning xfer function
-num_circuits = 8;
+num_circuits = 4;
+seq = [1,3,5,7];
+load('Ground_truth.mat');
 V = [];
-for index=1:2:num_circuits
-    load(strcat(Path1,num2str(index),'_RMS.mat'));
+for index=1:num_circuits
+    load(strcat(Path1,num2str(seq(index)),'_RMS.mat'));
+%     for i=1:5
+%         Vrms(i,:) = Vrms(i,:)-Vrms(i,1);
+% %         Vrms(i,:) = Vrms(i,:)./actual_current;
+%     end
     V = [V Vrms];
-    disp(index);
+%     V(~isfinite(V(:,:)))=0;
+    clear Vrms;
+    disp(seq(index));
 end
 
-load('Ground_truth.mat');
 nloads = 15; % Number of loads in calibrator seq.
 
 %% As per signal deconvolution Eqn is V = A*I [All are vectors/matrices]
@@ -49,26 +56,44 @@ for i=1:30
     end
 end
 
-
 %% Plot predicted current data
 close all;
 clc;
 cmap = colormap(prism);
 
 num_channel=4;
-range=16+30:30+30;
+offset=45;
+range=1+offset:15+offset;
 
 for j=1:num_channel
 %     figure;
     plot(I(j,range),'color',cmap(j+1,:),'LineStyle','-','DisplayName',i);
     hold on;   
     plot(I_pred(j,range),'color',cmap(j+1,:),'LineStyle','*','DisplayName',i);
+%     errorbar(I_pred(j,range),error(j,range),'color',cmap(j+1,:));
     xlim([0 15]);
-    ylim([-0.2 1.9])
+%     ylim([-0.2 1.9])
 end
 legend('show','Location','northwest');
 
+%% Run this step to normalize Vmeas with measured current
 
+clear all;
+load('Exp-7_RMS.mat');
+load('Ground_truth.mat');
 
+num_channel=5;
+for i=1:num_channel
+    Vrms(i,:) = Vrms(i,:)-Vrms(i,1);
+%     V(i,:) = Vrms(i,:)./actual_current;
+end
 
+cmap = colormap(prism);
+for j=1:num_channel
+%     figure;
+    plot(Vrms(j,:),'color',cmap(j+1,:),'DisplayName',i);
+    hold on;    
+    xlim([0 15]);
+end
+legend('show');
 

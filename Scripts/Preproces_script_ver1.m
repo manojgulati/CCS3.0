@@ -7,19 +7,19 @@ clear all;
 close all;
 
 Path1 = '';
-Path2 = 'EXP-8_Filtered';
+Path2 = 'EXP-7_Filtered';
 
 Fs = 10000; % Sampling frequency
 Time_dur = 10; % Measurement time for each load configuration
 
-num_channels = 6;
+num_channels = 5;
 input_channel = 1;
 
 load(strcat(Path1,Path2,'.mat'));
 
 %% Select and chop off guard intervals
 
-start_slot = 221000;
+start_slot = 235000;
 end_slot = start_slot+150*Fs;
 
 plot(time(start_slot:end_slot),y(start_slot:end_slot,input_channel),'b')

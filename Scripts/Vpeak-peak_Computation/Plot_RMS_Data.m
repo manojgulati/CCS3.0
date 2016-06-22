@@ -4,8 +4,9 @@ clc;
 
 input_channel = 1;
 num_channel = 5;
+Path3 = './Processed_data/';
 
-load('Exp-7_RMS.mat');
+load(strcat(Path3,'Exp-1_RMS.mat'));
 
 for i=1:num_channel
     RMS_Data(i,:) = Vrms(i,:)-Vrms(i,1);
@@ -19,5 +20,3 @@ for j=1:num_channel
     xlim([0 15]);
 end
 legend('show');
-    
-%     RMS_Data

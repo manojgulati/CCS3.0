@@ -8,8 +8,8 @@ clc;
 clear all;
 close all;
 
-var = 8;
-var_length = 6;
+var = 5;
+var_length = 16;
 seq = [1,4,7,10,13,16];
 
 % while(var<2)
@@ -52,14 +52,15 @@ Hd = design(d,'butter');
 
 for i=1:var_length
     disp(i);
-    x(:,i) = data(:,seq(i));
+    x(:,i) = data(:,i);
     y(:,i) = filter(Hd, x(:,i));
 end
 
 % % Plot time domain data from Inductive coils
+figure('units','normalized','outerposition',[0 0 1 1])
 
 for j=1:var_length
-    h(j) = subplot(var_length/2,2,j);
+    h(j) = subplot(var_length/4,4,j);
 %     plot(time,data(:,j),'r')
     hold on;
     plot(time,y(:,j),'b')
@@ -72,8 +73,8 @@ for j=1:var_length
     set(gca,'XTick',[0:10:200])
     linkaxes(h(j),'x')
 end
-% saveas(gcf,strcat(Path2,'_BW_LPF3','.png'));
-save(strcat(Path1,Path2,'_Filtered','.mat'),'time','y');
+saveas(gcf,strcat(Path2,'_BW_LPF3_New','.png'));
+save(strcat(Path1,Path2,'_Filtered_New','.mat'),'time','y');
 % close all;
 % var=var+1;
 % end
