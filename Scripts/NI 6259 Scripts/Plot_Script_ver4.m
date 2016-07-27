@@ -8,7 +8,7 @@ clc;
 clear all;
 close all;
 
-var = 2;
+var = 1;
 var_length = 6;
 CT_channels = 3;
 % while(var<2)
@@ -74,24 +74,28 @@ for i=1:var_length
 end
 
 % % Plot time domain data from Inductive coils
+clc;
+
+figure('units','normalized','outerposition',[0 0 1 1])
 
 for j=1:var_length
     h(j) = subplot(var_length/2,2,j);
-    plot(time,data_scaled(:,j),'r')
-    hold on;
+%     plot(time,data_scaled(:,j),'r')
+%     hold on;
     plot(time,y(:,j),'b')
     xlabel('Time (in seconds)')
     ylabel('Amplitude (in volts)')
     % legend('Raw TD','After Filtering')
     % ylim([.0000 .00015])
     grid on;
-%     xlim([0 200]);
-%     set(gca,'XTick',[0:10:200])
+    xlim([0 320]);
+    set(gca,'XTick',[0:20:320])
     linkaxes(h(j),'x')
 end
-% saveas(h,strcat(Path2,'_BW_LPF3','.png'));
+% %
+saveas(gcf,strcat(Path2,'_BW_LPF3_New','.png'));
 % save(strcat(Path1,Path2,'_Filtered','.mat'),'time','y');
-% close all;
+close all;
 % var=var+1;
 % end
 
