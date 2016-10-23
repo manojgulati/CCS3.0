@@ -2,7 +2,7 @@ clc;
 clear all;
 close all;
 
-Path1 = 'EXP-08';
+Path1 = 'EXP-01';
 
 load(strcat(Path1,'_ComplexData.mat'));
 var_length = 9; % No. of channels
@@ -15,7 +15,7 @@ Ext_Data = Ext_Data';
 %% Code for extracting 150sec waveform having calibrator sequence
 
 % Set this var to define start of 150sec complex waveform 
-x_begin =  23;
+x_begin = 22;
 x_end = x_begin+(T_calseq-1);
 
 % %
@@ -34,6 +34,8 @@ for j=1:var_length
     set(gca,'XTick',[0:10:T_calseq])
     linkaxes(h,'x')
 end
+
+%%
 saveas(gcf,strcat(Path1,'_Ext_CalSeq','.png'));
 % 
 save(strcat(Path1,'_Ext_CalSeq','.mat'),'Data_Slot');

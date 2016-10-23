@@ -1,10 +1,9 @@
-
-
+% Script to compute complex waveform from real valued timeseries of measured data
 clc;
 clear all;
 close all;
 
-Path1 = 'EXP-08';
+Path1 = 'EXP-01';
 
 load(strcat(Path1,'_Filtered_New.mat'));
 var_length = 9; % No. of channels
@@ -16,17 +15,17 @@ Td = 200; % Total time duration of calibrator sequence
 
 act_freq = 60; % freq of input signal
 L = size(y(:,1),1);
-
+%%
 var = 1;    
 while var<var_length+1
 
     offset=0;
     for i=1:Td
-        V_FFT(i,:) = fftshift(fft(y(1+offset:SAMPLE_RATE+offset,var)));
-        V_FT(i,:) = (V_FFT(i,:)/L);
-        V_FT_N(i,:) = V_FT(i,5001:end);
-        Data(i) = V_FT_N(i,61);
-        offset = offset+SAMPLE_RATE;
+%         V_FFT(i,:) = fftshift(fft(y(1+offset:SAMPLE_RATE+offset,var)));
+%         V_FT(i,:) = (V_FFT(i,:)/L); CHK LENGTH VECTOR
+%         V_FT_N(i,:) = V_FT(i,5001:end);
+%         Data(i) = V_FT_N(i,61);
+%         offset = offset+SAMPLE_RATE;
     end
     Ext_Data(var,:)=Data;
     clear V_FFT;

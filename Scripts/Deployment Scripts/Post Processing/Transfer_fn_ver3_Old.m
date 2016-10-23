@@ -19,16 +19,26 @@ I_channels = 4;
 T_Total = 600;
 
 V = [];
-I = [];
+I_raw = [];
 for index=1:num_circuits
     load(strcat(Path1,num2str(seq(index)),Path2));
     V = [V; Data_Slot(:,1:V_channels)];
-    I = [I; Data_Slot(:,V_channels+1:V_channels+I_channels)];
+    I_raw = [I_raw; Data_Slot(:,V_channels+1:V_channels+I_channels)];
     clear Data_Slot;
 end
-
-I=I';
+%
+I_raw=I_raw';
 V=V';
+I = I_raw;
+%% Scaling factor for CT data
+
+% % Shunt resistor value (in Ohms)
+% R_shunt = 100;
+% turn_ratio = 3000;
+% 
+%     I = I_raw/R_shunt;
+%     % Load primary current data to scaled data vector
+%     I = I*turn_ratio;
 
 
 %%
@@ -37,12 +47,13 @@ imagesc(abs(I_pred));
 colorbar;
 
 % YTickLabel = ;
-set(gca,'YTickLabel',{'','Circuit Breaker-1','','Circuit Breaker-2','','Circuit Breaker-3','','Circuit Breaker-4',''})
+% set(gca,'YTickLabel',{'','Circuit Breaker-1','','Circuit Breaker-2','','Circuit Breaker-3','','Circuit Breaker-4',''})
 % set(gca,'YTickLabel',{'','Sensing Coil-1','','Sensing Coil-2','','Sensing Coil-3','','Sensing Coil-4','','Sensing Coil-5'})
 
 xlabel('Time (in Seconds)');
-saveas(gcf,strcat('Ipred_withBGL_2D_Plot_Edited','.png'));
-% save(strcat('Tr_func_withoutBGL_2D_Plot','.mat'),'A');
+% saveas(gcf,strcat('Ipred_withBGL_2D_Plot_CROSSTEST','.png'));
+%%
+save(strcat('Tr_func_withBGL_2D_Plot','.mat'),'A');
 % close all
 
 %% As per signal deconvolution Eqn is V = A*I [All are vectors/matrices]
@@ -70,15 +81,33 @@ clear all
 load Tr_func_withBGL_2D_Plot.mat;
 A2=A; clear A;
 load Tr_func_withoutBGL_2D_Plot.mat;
-%%
-figure, hold on; grid on;
-plot(real(A),imag(A),'color','r');
-plot(real(A2),imag(A2),'color','b');
-legend('without BGL','','','','with BGL','','','')
+
+A = A./abs(A);
+A2 = A2./abs(A2);
+%% 
+clc;
+figure, hold on; grid off;
+plot(real(A(:,1)),imag(A(:,1)),'color','blue');
+plot(real(A(:,2)),imag(A(:,2)),'color','red');
+plot(real(A(:,3)),imag(A(:,3)),'color','green');
+plot(real(A(:,4)),imag(A(:,4)),'color','magenta');
+
+plot(real(A2(:,1)),imag(A2(:,1)),'color','blue','marker','*','LineStyle','--');
+plot(real(A2(:,2)),imag(A2(:,2)),'color','red','marker','*','LineStyle','--');
+plot(real(A2(:,3)),imag(A2(:,3)),'color','green','marker','*','LineStyle','--');
+plot(real(A2(:,4)),imag(A2(:,4)),'color','magenta','marker','*','LineStyle','--');
+legend('BRK-1','BRK-2','BRK-3','BRK-4')
 xlabel('Real');
 ylabel('Imaginary');
 
+% saveas(gcf,strcat('Normalised_Complex_Tr_Function','.png'));
 
+%%
+figure, hold on; grid on;
+Diff_Matrix = A2-A;
+plot(real(Diff_Matrix),imag(Diff_Matrix),'color','blue');
+xlabel('Real');
+ylabel('Imaginary');
 
 
 

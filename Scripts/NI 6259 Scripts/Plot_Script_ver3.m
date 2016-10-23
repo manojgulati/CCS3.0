@@ -8,7 +8,7 @@ clc;
 clear all;
 close all;
 
-var = 8;
+var = 1;
 var_length = 9;
 seq = [1,4,7,10,13,17,20,23,26];
 
@@ -20,7 +20,7 @@ Path2 = strcat('EXP-0',num2str(var));
 Path3 = []; 
 load(strcat(Path1,Path2,Path3,'.mat'));
 
-% % Design a BPF LPF
+%% Design a BPF LPF
 
 % Filter Specs
 Fs = 10*10^3; % Sampling frequency of signal in Hz
@@ -57,7 +57,7 @@ for i=1:var_length
     y(:,i) = filter(Hd, x(:,i));
 end
 
-% % Plot time domain data from Inductive coils
+%% Plot time domain data from Inductive coils
 figure('units','normalized','outerposition',[0 0 1 1])
 
 for j=1:var_length
@@ -76,9 +76,108 @@ for j=1:var_length
 end
 clc
 
-saveas(gcf,strcat(Path2,'_BW_LPF3_New','.png'));
-save(strcat(Path1,Path2,'_Filtered_New','.mat'),'time','y');
-close all;
+% saveas(gcf,strcat(Path2,'_BW_LPF3_New','.png'));
+% save(strcat(Path1,Path2,'_Filtered_New','.mat'),'time','y');
+% close all;
 % var=var+1;
 % end
+%%
+figure;
+h(1) = subplot(2,1,1);
+plot(time,y(:,1),'b')
+ylabel('Amplitude (in volts)')
+% xlabel('Time (in seconds)')
+grid on;
+title('Voltage measured across sensing coil')
+h(2) = subplot(2,1,2);
+plot(time,y(:,6),'b')
+xlabel('Time (in seconds)')
+ylabel('Amplitude (in volts)')
+grid on;
+title('Voltage measured across CT output')
+linkaxes(h,'x')
+saveas(gcf,strcat('Filtered_Output','.png'));
+
+
+%%
+clc;
+clear all;
+seq = ['1','3','5','7'];
+for i=1:4
+
+    load(strcat('Exp-',num2str(seq(i)),'_RMS','.mat'));
+%     V(i) = Vrms;
+    eval(sprintf('V%d = Vrms;', i));
+    clear Vrms;
+end
+%%
+figure;
+h(1) = subplot(2,2,1);
+plot(V1(1,:),'blue')
+hold on;
+plot(V1(2,:),'green')
+plot(V1(3,:),'magenta')
+plot(V1(4,:),'black')
+plot(V1(5,:),'red')
+ylabel('Amplitude (in volts)')
+xlabel('Calibrator Load Sequence')
+xlim([1 15]);
+set(gca,'XTick',[1:1:15])
+% grid on;
+legend('Coil-0','Coil-1','Coil-2','Coil-3','Coil-4','Location','northwest');
+title('Circuit Breaker-1')
+
+h(2) = subplot(2,2,2);
+plot(V2(1,:),'blue')
+hold on;
+plot(V2(2,:),'green')
+plot(V2(3,:),'magenta')
+plot(V2(4,:),'black')
+plot(V2(5,:),'red')
+ylabel('Amplitude (in volts)')
+xlabel('Calibrator Load Sequence')
+xlim([1 15]);
+set(gca,'XTick',[1:1:15])
+% grid on;
+legend('Coil-0','Coil-1','Coil-2','Coil-3','Coil-4','Location','northwest');
+title('Circuit Breaker-2')
+
+h(3) = subplot(2,2,3);
+plot(V3(1,:),'blue')
+hold on;
+plot(V3(2,:),'green')
+plot(V3(3,:),'magenta')
+plot(V3(4,:),'black')
+plot(V3(5,:),'red')
+ylabel('Amplitude (in volts)')
+xlabel('Calibrator Load Sequence')
+xlim([1 15]);
+set(gca,'XTick',[1:1:15])
+% grid on;
+legend('Coil-0','Coil-1','Coil-2','Coil-3','Coil-4','Location','northwest');
+title('Circuit Breaker-3')
+
+h(4) = subplot(2,2,4);
+plot(V4(1,:),'blue')
+hold on;
+plot(V4(2,:),'green')
+plot(V4(3,:),'magenta')
+plot(V4(4,:),'black')
+plot(V4(5,:),'red')
+ylabel('Amplitude (in volts)')
+xlabel('Calibrator Load Sequence')
+xlim([1 15]);
+set(gca,'XTick',[1:1:15])
+% grid on;
+legend('Coil-0','Coil-1','Coil-2','Coil-3','Coil-4','Location','northwest');
+title('Circuit Breaker-4')
+linkaxes(h,'x')
+saveas(gcf,strcat('Measured_Cal_Sequence','.png'));
+
+
+
+
+
+
+
 
