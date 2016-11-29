@@ -7,13 +7,13 @@ close all;
 clear all;
 clc;
 
-Num_Sensors = 16;
-Coil_channels = 9;
-CT_channels = 7;
+Num_Sensors = 19;
+Coil_channels = 10;
+CT_channels = 9;
 
 % Td = 300; % Time Duration
-Breaker_labels = {'12_r1','5_r1','6_r1','7_r1'};
-cal_index =4;
+Breaker_labels = {'2_r1','4_r1','6_r1','8_r1','10_r1','14_r1','16_r1'};
+cal_index =7;
 
 Path2 = 'Data_Filt_Sel';
 Path3 = 'Data_Complex_Sel-';
@@ -55,10 +55,10 @@ T_calseq = 150;
 
 Ext_Data = Ext_Data';
 %%
-x_begin =  37;
+x_begin =  27;
 x_end = x_begin+(T_calseq-1);
 
-CT_index = 16;
+CT_index = 18;
 
 % %
 Data_Slot = Ext_Data(x_begin:x_end,:);
@@ -80,23 +80,6 @@ end
 saveas(gcf,strcat(Path2,char(Breaker_labels(cal_index)),'_Ext_CalSeq','.png'));
 %%
 save(strcat(Path3,char(Breaker_labels(cal_index)),'.mat'),'Data_Slot');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

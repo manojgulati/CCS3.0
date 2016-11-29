@@ -8,12 +8,12 @@ clear all;
 clc;
 Path1 = '/Calibrator Sequnce [8AUG16]/';
 
-CH_INFO =  [1,4,7,10,13,16,17,20,23,26,29,32,33,35,37,39,41,43,45,47];
+CH_INFO =  [1,4,7,10,13,16,17,20,23,26,29,32,33,35,37,39,41,43,45,47,49,51,53,55];
 
-Num_Sensors = 20;
+Num_Sensors = 24;
 Td = 220; % Time Duration
 
-Path2 = 'CAL_SEQ_BRK-12_r1';
+Path2 = 'CAL_SEQ_BRK-16_r1';
 % load(strcat(Path2,'_CT_Scaled.mat'));
 % load(strcat(Path2,'_Filtered_Data.mat'));
 load(strcat(Path2,'.mat'));
@@ -40,10 +40,10 @@ end
 %% Scaling factor for CT data
 
 % Shunt resistor value (in Ohms)
-R_shunt = 250;
+R_shunt = 125;
 turn_ratio = 3000;
 CT_channels = 7;
-Coil_channels = 9;
+Coil_channels = 24;
 
 for k=1:CT_channels
     disp(k);
@@ -79,7 +79,7 @@ clc;
 
 figure('units','normalized','outerposition',[0 0 1 1])
 for j=1:Coil_channels
-    h(j) = subplot(Coil_channels/3,4,j);
+    h(j) = subplot(Coil_channels/4,4,j);
     plot(time,Data_Filt(:,j),'b')
     xlabel('Time (in seconds)')
     ylabel('Amplitude')

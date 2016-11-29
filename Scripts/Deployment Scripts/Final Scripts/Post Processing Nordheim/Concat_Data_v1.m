@@ -1,4 +1,4 @@
-% Concatinating measured data from CTs 
+% Concatinating measured data from CTs [Alex's Apartment]
 % Author Name :- Manoj Gulati
 % IIIT-Delhi
 
@@ -7,19 +7,17 @@ clear all;
 clc;
 
 % Num_Sensors = 20;
-Actual_CT_ch = 4;
+Actual_CT_ch = 7;
 
 % Td = 300; % Time Duration
-Breaker_labels = {'12_r1','5_r1','6_r1','7_r1'};
+Breaker_labels = {'13_r1','15_r1','17_r1','2_r1','8_r1','12_r1','16_r1'};
 
 Path2 = 'CAL_SEQ_BRK-';
 
 Data_SEL = [];
 for i=1:Actual_CT_ch
     load(strcat(Path2,char(Breaker_labels(i)),'_Filtered_Data.mat'));
-    Data_SEL = [Data_Filt(:,1:5),Data_Filt(:,7:10),Data_Filt(:,13:16),Data_Filt(:,19),Data_Filt(:,18),Data_Filt(:,17)];
-
-%     Data_SEL = [Data_Filt(:,1:13),Data_Filt(:,16),Data_Filt(:,15),Data_Filt(:,14)];
+    Data_SEL = [Data_Filt(:,1:11),Data_Filt(:,13:20)];
 
     save(strcat('Data_Filt_Sel',char(Breaker_labels(i)),'.mat'),'time','Data_SEL');
     clear Data_Filt; 

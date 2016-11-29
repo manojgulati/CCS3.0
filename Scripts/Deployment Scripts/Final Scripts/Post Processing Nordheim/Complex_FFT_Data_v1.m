@@ -7,13 +7,13 @@ close all;
 clear all;
 clc;
 
-Num_Sensors = 16;
-Coil_channels = 9;
-CT_channels = 7;
+Num_Sensors = 19;
+Coil_channels = 11;
+CT_channels = 8;
 
 % Td = 300; % Time Duration
-Breaker_labels = {'12_r1','5_r1','6_r1','7_r1'};
-cal_index =4;
+Breaker_labels = {'13_r1','15_r1','17_r1','2_r1','8_r1','12_r1','16_r1'};
+cal_index = 7;
 
 Path2 = 'Data_Filt_Sel';
 Path3 = 'Data_Complex_Sel-';
@@ -21,10 +21,10 @@ Path3 = 'Data_Complex_Sel-';
 
 load(strcat(Path2,char(Breaker_labels(cal_index)),'.mat'));
 
-%% % Extract complex vector by computing FFT 
+% % % Extract complex vector by computing FFT 
 SAMPLE_RATE = 10000;
 
-Td = 220; % Total time duration of calibrator sequence 
+Td = 250; % Total time duration of calibrator sequence 
 
 Actual_Freq = 60; % freq of input signal
 L = size(Data_SEL(:,1),1);
@@ -55,10 +55,10 @@ T_calseq = 150;
 
 Ext_Data = Ext_Data';
 %%
-x_begin =  37;
+x_begin =  39;
 x_end = x_begin+(T_calseq-1);
 
-CT_index = 16;
+CT_index = 19;
 
 % %
 Data_Slot = Ext_Data(x_begin:x_end,:);
@@ -80,23 +80,6 @@ end
 saveas(gcf,strcat(Path2,char(Breaker_labels(cal_index)),'_Ext_CalSeq','.png'));
 %%
 save(strcat(Path3,char(Breaker_labels(cal_index)),'.mat'),'Data_Slot');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

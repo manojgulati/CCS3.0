@@ -13,13 +13,13 @@ CH_INFO =  [1,4,7,10,13,16,17,20,23,26,29,32,33,35,37,39,41,43,45,47];
 Num_Sensors = 20;
 Td = 220; % Time Duration
 
-Path2 = 'CAL_SEQ_BRK-12_r1';
+Path2 = 'CAL_SEQ_BRK-17_r1';
 % load(strcat(Path2,'_CT_Scaled.mat'));
 % load(strcat(Path2,'_Filtered_Data.mat'));
 load(strcat(Path2,'.mat'));
 
 
-%% Design a BPF
+% % Design a BPF
 % Filter Specs
 Fs = 10*10^3; % Sampling frequency of signal in Hz
 
@@ -40,10 +40,10 @@ end
 %% Scaling factor for CT data
 
 % Shunt resistor value (in Ohms)
-R_shunt = 250;
+R_shunt = 125;
 turn_ratio = 3000;
 CT_channels = 7;
-Coil_channels = 9;
+Coil_channels = 24;
 
 for k=1:CT_channels
     disp(k);
@@ -76,10 +76,10 @@ close all;
 
 %% Plot Coil Channels Data
 clc;
-
+Coil_channels = Num_Sensors;
 figure('units','normalized','outerposition',[0 0 1 1])
 for j=1:Coil_channels
-    h(j) = subplot(Coil_channels/3,4,j);
+    h(j) = subplot(Coil_channels/4,4,j);
     plot(time,Data_Filt(:,j),'b')
     xlabel('Time (in seconds)')
     ylabel('Amplitude')
@@ -89,7 +89,7 @@ for j=1:Coil_channels
     set(gca,'XTick',[0:10:Td])
     linkaxes(h(j),'x')
 end
-%%
+% %
 saveas(gcf,strcat(Path2,'_Coil_Data','.png'));
 close all;
 
