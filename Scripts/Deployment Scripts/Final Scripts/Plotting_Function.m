@@ -20,8 +20,8 @@ Tag_name = 'Ipred';
 saveas(gcf,strcat(Tag_name,'_withBGL_2D_Plot_Scaled_CrossTest','.png'));
 
 %% Compute absolute error
-I_channels=4;
-Td=600; % Time duration
+I_channels=size(I,1);
+Td=size(I,2); % Time duration
 for i_range=1:I_channels
     RMSE_BRK(i_range,:) =  error(i_range,:).^2;
     RMSE_BRK_Norm(i_range) =  sum(RMSE_BRK(i_range,:))/Td;
@@ -31,9 +31,11 @@ for i_range=1:I_channels
     Error_BRK_Norm(i_range) = Error_BRK(i_range)/Td; 
 end
 
-% Tag = 'SelfTest';
-Tag = 'CrossTest';
+Tag = 'SelfTest';
+% Tag = 'CrossTest';
 save(strcat('Error_BRK_NORM_',Tag,'.mat'),'Error_BRK_Norm','RMSE_BRK_Norm');
+%
+A1 = abs(Error_BRK_Norm); A2 = abs(RMSE_BRK_Norm);
 
 %% Plot magnitude of current as overlapping time series
 figure;
