@@ -37,8 +37,8 @@ I = I*Scaling_Factor;
 I_pred = I_pred*Scaling_Factor;
 error = error*Scaling_Factor;
 
-% Tag = 'SelfTest';
-Tag = 'CrossTest';
+Tag = 'SelfTest';
+% Tag = 'CrossTest';
 save(strcat('Error_BRK_NORM_',Tag,'.mat'),'Error_BRK_Norm','RMSE_BRK_Norm');
 %
 A1 = abs(Error_BRK_Norm); A2 = abs(RMSE_BRK_Norm);
@@ -81,8 +81,8 @@ xlabel('Time (in Seconds)');
 grid on;
 
 Tag_name = 'Error';
-saveas(gcf,strcat(Tag_name,'_withBGL_Line_Plot_',Tag,'_1.png'));
-saveas(gcf,strcat(Tag_name,'_withBGL_Line_Plot_',Tag,'_1.fig'));
+saveas(gcf,strcat(Tag_name,'_withoutBGL_Line_Plot_',Tag,'_1.png'));
+saveas(gcf,strcat(Tag_name,'_withoutBGL_Line_Plot_',Tag,'_1.fig'));
 
 
 

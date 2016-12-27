@@ -1,4 +1,3 @@
-% Concatinating measured data from CTs 
 % Author Name :- Manoj Gulati
 % IIIT-Delhi
 % Script to compute complex waveform from real valued timeseries of measured data
@@ -7,26 +6,30 @@ close all;
 clear all;
 clc;
 
+format long e;
+
 Num_Sensors = 9;
 Coil_channels = 5;
 CT_channels = 4;
 
+Path1 = 'Exp-0'; % file having measured voltage and current data for learning xfer function
+Path2 = '_Filtered_New';
+% seq = [5,6,7,8];
+seq = [1,2,3,4];
 % Td = 300; % Time Duration
-% Breaker_labels = {'12_r1','5_r1','6_r1','7_r1'};
+cal_index =1;
 
-Exp_index =1;
-
-load(strcat('EXP-0',num2str(Exp_index),'_scaled_data','.mat'));
+load(strcat(Path1,num2str(cal_index),Path2,'.mat'));
 
 %% % Extract complex vector by computing FFT 
 SAMPLE_RATE = 10000;
 
-Td = 200; % Total time duration of calibrator sequence 
+Td = 220; % Total time duration of calibrator sequence 
 
 Actual_Freq = 60; % freq of input signal
-L = size(Scaled_data(:,1),1);
+L = size(Data_SEL(:,1),1);
 
-%%
+% %
 var = 1;    
 while var<Num_Sensors+1  
     offset=0;

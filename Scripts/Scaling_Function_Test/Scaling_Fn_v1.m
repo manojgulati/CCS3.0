@@ -7,9 +7,9 @@ clc;
 clear all
 close all
 
-VAR=8;
+VAR=1;
 Path1 = '/Volumes/Omkar_HD/UW Project Data/Data Analysis/Data_25July/Raw Data/';
-load(strcat(Path1,'EXP-0',num2str(VAR),'_Filtered_New.mat'));
+load(strcat('EXP-0',num2str(VAR),'_Filtered_New.mat'));
 
 % % Current Scaling Factor-1
 K=1;
@@ -25,7 +25,7 @@ while(K<5)
     K=K+1;
     % Shunt resistor value (in Ohms)
     R_shunt = 1250;
-    turn_ratio = 3000;
+%     turn_ratio = 3000;
     Isec(:,K) = y(:,K+5)/R_shunt;
     % Load primary current data to scaled data vector
     data_scaled(:,K) = Isec(:,K)*turn_ratio;
