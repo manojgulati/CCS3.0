@@ -49,7 +49,7 @@ end
 % saveas(gcf,strcat(Path1,num2str(Cal_Index),'_rms','.png'));
 % saveas(gcf,strcat(Path1,num2str(Cal_Index),'_rms','.fig'));
 
-% % Extract complex vector by computing FFT
+%% Extract complex vector by computing FFT
 
 var = 1;    
 while var<Num_Sensors+1  
@@ -62,38 +62,39 @@ while var<Num_Sensors+1
         offset = offset+SAMPLE_RATE;
     end
     Ext_Data(var,:)=Data;
-    clear Data_FFT;
+%     clear Data_FFT;
     clear Data_FT;
     clear Data_FT_N;
     clear Data;
     offset=0; i=0;
     var=var+1;
 end
-% %
-% plot(abs(Ext_Data(CT_Index,:)));
-% ylim([0 1.3*10^-3]);
+%%
+plot(abs(Ext_Data(CT_Index,:)));
+ylim([0 1.3*10^-3]);
 
-% saveas(gcf,strcat(Path1,num2str(Cal_Index),'_FFT','.png'));
-% saveas(gcf,strcat(Path1,num2str(Cal_Index),'_FFT','.fig'));
+saveas(gcf,strcat(Path1,num2str(Cal_Index),'_FFT','.png'));
+saveas(gcf,strcat(Path1,num2str(Cal_Index),'_FFT','.fig'));
 
-% % % Code for extracting 150sec waveform having calibrator sequence
-% 
-% % Set this var to define start of 150sec complex waveform 
-% T_calseq = 150;
-% 
-% Ext_Data = Ext_Data';
-% % %
-% x_begin =  24;
-% x_end = x_begin+(T_calseq-1);
-% 
-% %
-% Data_Slot = Ext_Data(x_begin:x_end,:);
-% 
-% plot([1:1:T_calseq],abs(Data_Slot(:,CT_Index)));
+%% Code for extracting 150sec waveform having calibrator sequence
 
-% %
-% save(strcat(Path3,num2str(Cal_Index),'.mat'),'Data_Slot');
+% Set this var to define start of 150sec complex waveform 
+T_calseq = 150;
 
+Ext_Data = Ext_Data';
+%%
+x_begin =  24;
+x_end = x_begin+(T_calseq-1);
+
+%
+Data_Slot = Ext_Data(x_begin:x_end,:);
+
+plot([1:1:T_calseq],abs(Data_Slot(:,CT_Index)));
+
+%%
+save(strcat(Path3,num2str(Cal_Index),'.mat'),'Data_Slot');
+
+%%
 save(strcat(Path4,num2str(Cal_Index),'.mat'),'Ext_Data','Averaged_Data');
 
 
