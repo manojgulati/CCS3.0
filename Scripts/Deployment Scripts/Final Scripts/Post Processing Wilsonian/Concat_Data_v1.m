@@ -10,7 +10,7 @@ clc;
 Actual_CT_ch = 4;
 
 % Td = 300; % Time Duration
-Breaker_labels = {'12_r1','5_r1','6_r1','7_r1'};
+Breaker_labels = {'12_r1','5_r1','6_r2','7_r1'};
 
 Path2 = 'CAL_SEQ_BRK-';
 

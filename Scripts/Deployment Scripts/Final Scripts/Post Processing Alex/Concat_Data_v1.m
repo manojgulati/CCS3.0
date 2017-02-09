@@ -6,7 +6,7 @@ close all;
 clear all;
 clc;
 
-% Num_Sensors = 20;
+Num_Sensors = 19;
 Actual_CT_ch = 7;
 
 % Td = 300; % Time Duration

@@ -57,17 +57,17 @@ turn_ratio = 3000;
 
 %%
 % close all;
-imagesc(abs(I_new));
-% caxis([0, 5*10^-4])
+imagesc(abs(I_pred));
+caxis([0, 13*10^-4])
 colorbar;
 
 % saveas(gcf,strcat('I_2D_Plot','.png'));
 % close all
 
 xlabel('Time (in Seconds)');
-Tag_name = 'I';
+Tag_name = 'Ipred';
 
-saveas(gcf,strcat(Tag_name,'_withBGL_2D_Plot_Scaled','.png'));
+saveas(gcf,strcat(Tag_name,'_withoutBGL_2D_Plot_Scaled_CrossTest','.png'));
 
 %% As per signal deconvolution Eqn is V = A*I [All are vectors/matrices]
 % We have to extract A from this by solving eqn V*inv(I) 
@@ -79,8 +79,8 @@ for i=1:T_Total
     V_test = V(:,i);
     I_test = I(:,i);
     
-    Inv_I_train = pinv(I_train);
-    A = V_train*Inv_I_train;
+%     Inv_I_train = pinv(I_train);
+%     A = V_train*Inv_I_train;
     Inv_A = pinv(A);
     I_pred(:,i) = Inv_A*V_test;
     error(:,i) = I_test-I_pred(:,i);
@@ -135,8 +135,12 @@ close all
 
 %% Save Transfer Function
 
-save('Tr_func_withoutBGL.mat','A');
+save('Tr_func_withBGL.mat','A');
+%%
+save('Results.mat','I_pred','error','I');
 
+%%
+save('Results_CrossTest.mat','I_pred','error','I');
 %% Compute absolute error
 
 for i_range=1:I_channels
